@@ -9,7 +9,7 @@ publish {
     groupId = 'com.yazao' //jCenter上的路径
     artifactId = 'xrecyclerview' //项目名称 --- 必须和 bintray上的创建的Name一致
     publishVersion = '1.0.0' //library的版本号
-    desc = 'a RecyclerView lib for Android' //library的简单描述
+    desc = 'a RecyclerView weight for Android' //library的简单描述
     website = 'https://github.com/yueliangrensheng/XRecyclerView' //library的开源地址，例如在github上的地址
 }
 
@@ -44,6 +44,5 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-//    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }
