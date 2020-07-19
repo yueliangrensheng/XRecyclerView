@@ -1,4 +1,4 @@
-package com.yazao.lib.weight.recyclerview.adapter;
+package com.yazao.weight.recyclerview.adapter;
 
 /**
  * 类描述：RecyclerView 通用的 适配器（多个不同的Item布局)

@@ -1,4 +1,4 @@
-package com.yazao.lib.weight.recyclerview.layoutmanager;
+package com.yazao.weight.recyclerview.layoutmanager;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -13,17 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
  * @data 26/12/2017 5:09 PM
  */
 
-public class AwesomeLinearLayoutManager extends LinearLayoutManager {
+public class XLinearLayoutManager extends LinearLayoutManager {
 
-    public AwesomeLinearLayoutManager(Context context) {
+    public XLinearLayoutManager(Context context) {
         super(context);
     }
 
-    public AwesomeLinearLayoutManager(Context context, int orientation, boolean reverseLayout) {
+    public XLinearLayoutManager(Context context, int orientation, boolean reverseLayout) {
         super(context, orientation, reverseLayout);
     }
 
-    public AwesomeLinearLayoutManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public XLinearLayoutManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

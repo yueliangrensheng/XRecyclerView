@@ -1,4 +1,4 @@
-package com.yazao.lib.weight.recyclerview.adapter;
+package com.yazao.weight.recyclerview.listener;
 
 import android.view.View;
 
@@ -10,5 +10,10 @@ import android.view.View;
  */
 
 public interface OnItemClickListener {
+    /**
+     * @param v
+     * @param position
+     * @param bean     item对应的数据bean
+     */
     void onItemClick(View v, int position, Object bean);
 }

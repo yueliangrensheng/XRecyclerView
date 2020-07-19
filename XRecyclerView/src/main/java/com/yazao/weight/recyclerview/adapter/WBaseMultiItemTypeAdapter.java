@@ -1,7 +1,9 @@
-package com.yazao.lib.weight.recyclerview.adapter;
+package com.yazao.weight.recyclerview.adapter;
 
 import android.content.Context;
 import android.view.ViewGroup;
+
+import com.yazao.weight.recyclerview.holder.XViewHolder;
 
 import java.util.List;
 
@@ -48,10 +50,10 @@ public abstract class WBaseMultiItemTypeAdapter<T> extends WBaseAdapter<T> {
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public XViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // 根据不同的 viewType 来生成不同的 layoutId。//ViewHolder 是通用的。
         int layoutId = mMultiItemTypeInterface.getLayoutId(viewType);
-        ViewHolder holder = ViewHolder.getViewHolder(mContext, parent, layoutId);
+        XViewHolder holder = XViewHolder.getViewHolder(mContext, parent, layoutId);
         return holder;
     }
 }

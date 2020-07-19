@@ -1,4 +1,4 @@
-package com.yazao.lib.weight.recyclerview.decoration;
+package com.yazao.weight.recyclerview.decoration;
 
 import android.content.Context;
 import android.graphics.Canvas;

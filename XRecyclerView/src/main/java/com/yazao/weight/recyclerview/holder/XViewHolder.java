@@ -1,4 +1,4 @@
-package com.yazao.lib.weight.recyclerview.adapter;
+package com.yazao.weight.recyclerview.holder;
 
 import android.content.Context;
 import android.text.SpannableString;
@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
+import androidx.annotation.StringRes;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -21,13 +23,13 @@ import androidx.recyclerview.widget.RecyclerView;
  * @data 24/01/2018 1:28 PM
  */
 
-public class ViewHolder extends RecyclerView.ViewHolder {
+public class XViewHolder extends RecyclerView.ViewHolder {
 
     private SparseArray<View> mViews;//存储 item view 内部的 子view
     private View mItemView;
     private Context mContext;
 
-    public ViewHolder(Context context, View itemView) {
+    public XViewHolder(Context context, View itemView) {
         super(itemView);
 
         this.mContext = context;
@@ -36,10 +38,10 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    public static ViewHolder getViewHolder(Context context, ViewGroup parent, @LayoutRes int layoutId) {
+    public static XViewHolder getViewHolder(Context context, ViewGroup parent, @LayoutRes int layoutId) {
 
         View itemView = LayoutInflater.from(context).inflate(layoutId, parent, false);
-        ViewHolder holder = new ViewHolder(context, itemView);
+        XViewHolder holder = new XViewHolder(context, itemView);
         return holder;
     }
 
@@ -66,39 +68,65 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         return textView.getText().toString();
     }
 
-    public ViewHolder setText(@IdRes int viewId, String textValue) {
+    public XViewHolder setText(@IdRes int viewId, String textValue) {
         TextView textView = getView(viewId);
         textView.setText(textValue);
         return this;
     }
 
-    public ViewHolder setText(@IdRes int viewId, SpannableString spannableString) {
+    public XViewHolder setText(@IdRes int viewId, SpannableString spannableString) {
         TextView textView = getView(viewId);
         textView.setText(spannableString);
         return this;
     }
 
-    public ViewHolder setImageResource(@IdRes int viewId, @DrawableRes int resId) {
+    public XViewHolder setText(@IdRes int viewId, @StringRes int resId) {
+        TextView textView = getView(viewId);
+        textView.setText(resId);
+        return this;
+    }
+
+    public XViewHolder setImageResource(@IdRes int viewId, @DrawableRes int resId) {
         ImageView view = getView(viewId);
         view.setImageResource(resId);
         return this;
     }
 
-    public ViewHolder setOnClickListener(@IdRes int viewId, View.OnClickListener listener) {
+    public XViewHolder setBackgroundColor(@IdRes int viewId, @ColorInt int color) {
+        View view = getView(viewId);
+        view.setBackgroundColor(color);
+        return this;
+    }
+
+    public XViewHolder setBackgroundRes(@IdRes int viewId, @DrawableRes int backgroundRes) {
+        View view = getView(viewId);
+        view.setBackgroundResource(backgroundRes);
+        return this;
+    }
+
+    public XViewHolder setVisibility(@IdRes int viewId, int visibility) {
+        View view = getView(viewId);
+        view.setVisibility(visibility);
+        return this;
+    }
+
+    public XViewHolder setOnClickListener(@IdRes int viewId, View.OnClickListener listener) {
         View view = getView(viewId);
         view.setOnClickListener(listener);
         return this;
     }
 
-    public ViewHolder setOnLongClickListener(@IdRes int viewId, View.OnLongClickListener listener) {
+    public XViewHolder setOnLongClickListener(@IdRes int viewId, View.OnLongClickListener listener) {
         View view = getView(viewId);
         view.setOnLongClickListener(listener);
         return this;
     }
 
-    public ViewHolder setVisibility(@IdRes int viewId, int visibility) {
-        View view = getView(viewId);
-        view.setVisibility(visibility);
+
+    public XViewHolder clear() {
+        if (mViews != null && mViews.size() > 0) {
+            mViews.clear();
+        }
         return this;
     }
 }

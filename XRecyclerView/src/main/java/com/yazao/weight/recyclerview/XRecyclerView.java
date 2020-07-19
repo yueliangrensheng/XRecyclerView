@@ -1,4 +1,4 @@
-package com.yazao.lib.weight.recyclerview;
+package com.yazao.weight.recyclerview;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -9,22 +9,22 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * 类描述：
+ * 类描述：内部已经处理滑动事件冲突
  *
  * @author zhaishaoping
  * @data 14/03/2018 6:27 PM
  */
 
-public class AwesomeRecyclerView extends RecyclerView {
+public class XRecyclerView extends RecyclerView {
 
     float mLastX;
     float mLastY;
 
-    public AwesomeRecyclerView(@NonNull Context context) {
+    public XRecyclerView(@NonNull Context context) {
         super(context);
     }
 
-    public AwesomeRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public XRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
