@@ -12,6 +12,127 @@ import com.yazao.lib.xlog.Log;
 /**
  * 类描述：RecyclerView Item间距
  *
+ * <pre>
+ *     目前支持 LinearLayoutManager 和 GridLayoutManager
+ * </pre>
+ *
+ * // 一、LinearLayoutManager使用场景：整个边框 left,top,right,bottom --> 30,30,30,60   item间距 --> 30
+ *
+ * <pre>
+ *      //OneSide = true
+ *
+ *       //1. LinearLayoutManager
+ *       LinearLayoutManager layoutManager = new XLinearLayoutManager(this);//Vertical
+ *       recyclerView.setLayoutManager(layoutManager);
+ *
+ *       //2.SpacingItemDecoration 单元素
+ *       int lastTopSpanCount = 30;//Item 第一行元素
+ *       int lastBottomSpanCount = 60;//Item 最后一行元素
+ *
+ *       int leftOrRightSpanCount = 30;
+ *       int topOrBottomSpanCount = 30;
+ *
+ *       SpacingItemDecoration spacingItemDecoration = new SpacingItemDecoration(
+ *                 leftOrRightSpanCount, topOrBottomSpanCount,
+ *                 lastTopSpanCount, lastBottomSpanCount);
+ *
+ *      //3.Optional（if true, just use the left、top、right ; other,all use）
+ *      spacingItemDecoration.setOneSide(true);
+ *
+ *      recyclerView.addItemDecoration(spacingItemDecoration);
+ * </pre>
+ *
+ * <pre>
+ *       //OneSide = false
+ *
+ *       //1. LinearLayoutManager
+ *       LinearLayoutManager layoutManager = new XLinearLayoutManager(this);//Vertical
+ *       recyclerView.setLayoutManager(layoutManager);
+ *
+ *       //2.SpacingItemDecoration 单元素
+ *       int lastTopSpanCount = 30;//Item 第一行元素
+ *       int lastBottomSpanCount = 60;//Item 最后一行元素
+ *
+ *       int leftOrRightSpanCount = 30;
+ *       int topOrBottomSpanCount = 15;
+ *
+ *       SpacingItemDecoration spacingItemDecoration = new SpacingItemDecoration(
+ *                 leftOrRightSpanCount, topOrBottomSpanCount,
+ *                 lastTopSpanCount, lastBottomSpanCount);
+ *
+ *      //3.Optional（if true, just use the left、top、right; other,all use）
+ *      spacingItemDecoration.setOneSide(false);
+ *
+ *      recyclerView.addItemDecoration(spacingItemDecoration);
+ * </pre>
+ *
+ *
+ * // 二、GridLayoutManager使用场景：整个边框 left,top,right,bottom --> 30,30,30,60   item间距 --> 10
+ *
+ *  oneSide true or false 区别在于： item间距的计算
+ *
+ * <pre>
+ *      //OneSide = true
+ *
+ *       //1. GridLayoutManager
+ *       int spanCount = 3;//列数
+ *       GridLayoutManager layoutManager = new GridLayoutManager(this,spanCount);
+ *       recyclerView.setLayoutManager(layoutManager);
+ *
+ *       //2.SpacingItemDecoration 多元素
+ *
+ *       int leftSpanCount = 10;//Item 左间距
+ *       int topSpanCount = 10;//Item 上间距
+ *       int rightSpanCount = 10;//Item 右间距
+ *       int bottomSpanCount = 10;//Item 下间距
+ *
+ *       int lastTopSpanCount = 30;//Item 第一行元素
+ *       int lastLeftSpanCount = 30;//Item 最左边元素
+ *       int lastRightSpanCount = 30;//Item 最右边元素
+ *       int lastBottomSpanCount = 60;//Item 最后一行元素
+ *
+ *
+ *       SpacingItemDecoration spacingItemDecoration = new SpacingItemDecoration(spanCount,
+ *                 leftSpanCount,topSpanCount,rightSpanCount,bottomSpanCount,
+ *                 lastTopSpanCount,lastBottomSpanCount,lastLeftSpanCount,lastRightSpanCount);
+ *
+ *      //3.Optional（if true, just use the left、top; other,all use）
+ *      spacingItemDecoration.setOneSide(true);
+ *
+ *      recyclerView.addItemDecoration(spacingItemDecoration);
+ * </pre>
+ *
+ * <pre>
+ *      //OneSide = false
+ *
+ *       //1. GridLayoutManager
+ *       int spanCount = 3;//列数
+ *       GridLayoutManager layoutManager = new GridLayoutManager(this,spanCount);
+ *       recyclerView.setLayoutManager(layoutManager);
+ *
+ *       //2.SpacingItemDecoration 多元素
+ *
+ *       int leftSpanCount = 5;//Item 左间距
+ *       int topSpanCount = 5;//Item 上间距
+ *       int rightSpanCount = 5;//Item 右间距
+ *       int bottomSpanCount = 5;//Item 下间距
+ *
+ *       int lastTopSpanCount = 30;//Item 第一行元素
+ *       int lastLeftSpanCount = 30;//Item 最左边元素
+ *       int lastRightSpanCount = 30;//Item 最右边元素
+ *       int lastBottomSpanCount = 60;//Item 最后一行元素
+ *
+ *
+ *       SpacingItemDecoration spacingItemDecoration = new SpacingItemDecoration(spanCount,
+ *                 leftSpanCount,topSpanCount,rightSpanCount,bottomSpanCount,
+ *                 lastTopSpanCount,lastBottomSpanCount,lastLeftSpanCount,lastRightSpanCount);
+ *
+ *      //3.Optional（if true, just use the left、top; other,all use）
+ *      spacingItemDecoration.setOneSide(false);
+ *
+ *      recyclerView.addItemDecoration(spacingItemDecoration);
+ * </pre>
+ *
  * @author zhaishaoping
  * @data 15/11/2017 2:57 PM
  */
@@ -31,7 +152,7 @@ public class SpacingItemDecoration extends RecyclerView.ItemDecoration {
     private boolean hasHead = false;//是否有头布局
     int headLeftSpanCount = 0;
     int headRightSpanCount = 0;
-    //是否只使用对应一边的值,即 左右、上下 四个方向 只选取 一组中的一个方向
+    //是否只使用对应一边的值,即 左右、上下 四个方向 只选取 一组中的一个方向.默认使用的是 left 和 top 值
     boolean isOneSide = false;
 
 
@@ -71,6 +192,18 @@ public class SpacingItemDecoration extends RecyclerView.ItemDecoration {
     /**
      * 每行/列 多个元素的 构造方法
      */
+    public SpacingItemDecoration(int spanSize,
+                                 int leftSpanCount, int topSpanCount, int rightSpanCount, int bottomSpanCount,
+                                 int lastTopSpanCount, int lastBottomSpanCount, int lastLeftSpanCount, int lastRightSpanCount) {
+        this(false, 0, 0,
+                spanSize,
+                leftSpanCount, topSpanCount, rightSpanCount, bottomSpanCount,
+                lastTopSpanCount, lastBottomSpanCount, lastLeftSpanCount, lastRightSpanCount);
+    }
+
+    /**
+     * 每行/列 多个元素的 构造方法
+     */
     public SpacingItemDecoration(boolean hasHead, int headLeftSpanCount, int headRightSpanCount,
                                  int spanSize,
                                  int leftSpanCount, int topSpanCount, int rightSpanCount, int bottomSpanCount,
@@ -97,32 +230,36 @@ public class SpacingItemDecoration extends RecyclerView.ItemDecoration {
 
         int position = parent.getChildLayoutPosition(view);
 
-        Log.i("--- getItemOffsets " + " --- spanSize = " + spanSize + ", --- position = " + position);
+//        Log.i("--- getItemOffsets " + " --- spanSize = " + spanSize + ", --- position = " + position);
 
         if (spanSize > 1) {
             //每行/列 多个元素：spanSize
-            if (!isOneSide) {
+
+            if (isOneSide) {
+                outRect.left = leftSpanCount;
+                outRect.top = topSpanCount;
+            } else {
+                outRect.left = leftSpanCount;
+                outRect.top = topSpanCount;
+                outRect.right = rightSpanCount;
+                outRect.bottom = bottomSpanCount;
             }
 
-            outRect.left = leftSpanCount;
-            outRect.top = topSpanCount;
-            outRect.right = rightSpanCount;
-            outRect.bottom = bottomSpanCount;
 
-            if (position % spanSize == 0 && lastLeftSpanCount != 0) {//左边
+            if (position % spanSize == 0) {//最左边
                 outRect.left = lastLeftSpanCount;
             }
 
-            if (position % spanSize == spanSize - 1 && lastRightSpanCount != 0) {//右边
+            if (position % spanSize == spanSize - 1) {//最右边
                 outRect.right = lastRightSpanCount;
-                outRect.left = 0;
             }
 
-            if (position / spanSize == 0 && lastTopSpanCount != 0) {//第一行
+            if (position / spanSize == 0) {//第一行
                 outRect.top = lastTopSpanCount;
             }
-
-            if (position >= parent.getChildCount() - spanSize && lastBottomSpanCount != 0) {//最后一行
+//            Log.i("--- getItemOffsets " + "position = " + position + " --- 当前行 = " + (position / spanSize) + ", --- 总行数 = " + (parent.getAdapter().getItemCount() - 1) / spanSize);
+            // 当前行数：position/ spanSize； 总行数：(parent.getAdapter().getItemCount() - 1 )/ spanSize
+            if (position / spanSize == (parent.getAdapter().getItemCount() - 1) / spanSize) {//最后一行
                 outRect.bottom = lastBottomSpanCount;
             }
 
@@ -135,8 +272,8 @@ public class SpacingItemDecoration extends RecyclerView.ItemDecoration {
             if (isOneSide) {
                 outRect.left = leftSpanCount;
                 outRect.right = rightSpanCount;
-                outRect.top = 0;
-                outRect.bottom = bottomSpanCount;
+                outRect.top = topSpanCount;
+                outRect.bottom = 0;
             } else {
                 outRect.left = leftSpanCount;
                 outRect.top = topSpanCount;
