@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         XToast.init(this);
 
         List<DataBean> dataBeanList = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 29; i++) {
             dataBeanList.add(new DataBean("title" + i, R.mipmap.ic_launcher));
         }
         mainAdapter = new MainAdapter(getBaseContext(), R.layout.item_recycler_view_layout, dataBeanList);//Vertical
@@ -60,7 +61,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayoutManager layoutManager = new XLinearLayoutManager(this);//Vertical
+        int spanCount = 3;
+        GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);//多元素
+
+//        LinearLayoutManager layoutManager = new XLinearLayoutManager(this);//Vertical
 //        LinearLayoutManager layoutManager = new XLinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);//horizontal
         recyclerView.setLayoutManager(layoutManager);
 
@@ -71,25 +75,31 @@ public class MainActivity extends AppCompatActivity {
 //        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL, 0, 0, 10, android.R.color.transparent));//horizontal
 
 
-        int leftSpanCount = 0;//Item 左间距
-        int topSpanCount = 0;//Item 上间距
-        int rightSpanCount = 0;//Item 右间距
-        int bottomSpanCount = 0;//Item 下间距
+        int leftSpanCount = 5;//Item 左间距
+        int topSpanCount = 5;//Item 上间距
+        int rightSpanCount = 5;//Item 右间距
+        int bottomSpanCount = 5;//Item 下间距
 
         int lastTopSpanCount = 30;//Item 第一行元素
-        int lastLeftSpanCount = 0;//Item 最左边元素
-        int lastRightSpanCount = 0;//Item 最右边元素
+        int lastLeftSpanCount = 30;//Item 最左边元素
+        int lastRightSpanCount = 30;//Item 最右边元素
         int lastBottomSpanCount = 60;//Item 最后一行元素
 
         int leftOrRightSpanCount = 30;
         int topOrBottomSpanCount = 15;
 
-        SpacingItemDecoration spacingItemDecoration = new SpacingItemDecoration(
-                leftOrRightSpanCount, topOrBottomSpanCount,
-                lastTopSpanCount, lastBottomSpanCount);
+        // SpacingItemDecoration 单元素
+//        SpacingItemDecoration spacingItemDecoration = new SpacingItemDecoration(
+//                leftOrRightSpanCount, topOrBottomSpanCount,
+//                lastTopSpanCount, lastBottomSpanCount);
+
+        // SpacingItemDecoration 多元素
+        SpacingItemDecoration spacingItemDecoration = new SpacingItemDecoration(spanCount,
+                leftSpanCount,topSpanCount,rightSpanCount,bottomSpanCount,
+                lastTopSpanCount,lastBottomSpanCount,lastLeftSpanCount,lastRightSpanCount);
+
 
         spacingItemDecoration.setOneSide(false);
-
         recyclerView.addItemDecoration(spacingItemDecoration);
 
 
