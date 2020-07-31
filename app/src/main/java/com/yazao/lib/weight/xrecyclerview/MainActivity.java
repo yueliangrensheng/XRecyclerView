@@ -7,15 +7,12 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yazao.lib.toast.XToast;
 import com.yazao.weight.recyclerview.adapter.WBaseAdapter;
-import com.yazao.weight.recyclerview.decoration.DividerItemDecoration;
 import com.yazao.weight.recyclerview.decoration.SpacingItemDecoration;
 import com.yazao.weight.recyclerview.holder.XViewHolder;
-import com.yazao.weight.recyclerview.layoutmanager.XLinearLayoutManager;
 import com.yazao.weight.recyclerview.listener.OnItemClickListener;
 import com.yazao.weight.recyclerview.listener.OnItemLongClickListener;
 import com.yazao.lib.weight.xrecyclerview.demo.R;
@@ -49,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position, Object bean) {
 
-                XToast.show("click position = " + position + ", bean = " + ((DataBean) bean).title);
+                XToast.show("click position = " + position + ", bean = " + ((DataBean) bean).title + ", width = " + v.getWidth());
             }
         });
 
@@ -81,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
         int bottomSpanCount = 5;//Item 下间距
 
         int lastTopSpanCount = 30;//Item 第一行元素
-        int lastLeftSpanCount = 30;//Item 最左边元素
-        int lastRightSpanCount = 30;//Item 最右边元素
+        int lastLeftSpanCount = 5;//Item 最左边元素
+        int lastRightSpanCount = 5;//Item 最右边元素
         int lastBottomSpanCount = 60;//Item 最后一行元素
 
         int leftOrRightSpanCount = 30;
