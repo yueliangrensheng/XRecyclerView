@@ -3,6 +3,7 @@ package com.yazao.weight.recyclerview.decoration;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,7 +16,7 @@ import com.yazao.lib.xlog.Log;
  * <pre>
  *     目前支持 LinearLayoutManager 和 GridLayoutManager
  * </pre>
- *
+ * <p>
  * // 一、LinearLayoutManager使用场景：整个边框 left,top,right,bottom --> 30,30,30,60   item间距 --> 30
  *
  * <pre>
@@ -65,12 +66,14 @@ import com.yazao.lib.xlog.Log;
  *
  *      recyclerView.addItemDecoration(spacingItemDecoration);
  * </pre>
- *
- *
+ * <p>
+ * <p>
  * // 二、GridLayoutManager使用场景：整个边框 left,top,right,bottom --> 30,30,30,60   item间距 --> 10
+ * <p>
+ * oneSide true or false 区别在于： item间距的计算
  *
- *  oneSide true or false 区别在于： item间距的计算
- *
+ * //在计算Item的宽度时候， 需要同时 减去 item的 left 和 right
+ * //因此在处理边界距离时候，可以把多余的差值设置到 RecyclerView 的 padding
  * <pre>
  *      //OneSide = true
  *
@@ -238,6 +241,8 @@ public class SpacingItemDecoration extends RecyclerView.ItemDecoration {
             if (isOneSide) {
                 outRect.left = leftSpanCount;
                 outRect.top = topSpanCount;
+                outRect.right = 0;
+                outRect.bottom = 0;
             } else {
                 outRect.left = leftSpanCount;
                 outRect.top = topSpanCount;
@@ -245,6 +250,8 @@ public class SpacingItemDecoration extends RecyclerView.ItemDecoration {
                 outRect.bottom = bottomSpanCount;
             }
 
+            //在计算Item的宽度时候， 需要同时 减去 item的 left 和 right
+            //因此在处理边界距离时候，可以把多余的差值设置到 RecyclerView 的 padding
 
             if (position % spanSize == 0) {//最左边
                 outRect.left = lastLeftSpanCount;
@@ -262,7 +269,6 @@ public class SpacingItemDecoration extends RecyclerView.ItemDecoration {
             if (position / spanSize == (parent.getAdapter().getItemCount() - 1) / spanSize) {//最后一行
                 outRect.bottom = lastBottomSpanCount;
             }
-
 
         } else {
             //每行/列 仅一个元素
